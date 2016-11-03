@@ -1,0 +1,38 @@
+<!-- DOCTYPE html -->
+<html lang="en">
+
+<head>
+    {% load staticfiles %}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block head_title %} Djangular BucketList {% endblock head_title %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/png" />
+    <script type="text/javascript" src="{% static 'lib/jquery/dist/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'lib/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'lib/bootstrap/dist/css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'lib/bootstrap-material-design/dist/css/bootstrap-material-design.min.css' %}" />
+    <script type="text/javascript" src="{% static 'lib/bootstrap-material-design/dist/js/ripples.min.js' %}"></script>
+
+    <script type="text/javascript" src="{% static 'lib/bootstrap-material-design/dist/js/material.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'lib/lodash/dist/lodash.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'lib/angular/angular.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'lib/angular-animate/angular-animate.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'lib/angular-aria/angular-aria.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'lib/angular-messages/angular-messages.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'lib/angular-sanitize/angular-sanitize.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'lib/angular-ui-router/release/angular-ui-router.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'lib/restangular/src/restangular.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/controllers.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/services.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/app.js' %}"></script>
+    <script type="text/javascript" src="{% static 'lib/ngstorage/ngstorage.min.js' %}"></script>
+</head>
+
+<body ng-app="BucketList" ng-cloak>
+{{STATIC_URL}}
+    {% block content %} {% endblock content %}
+</body>
+<script type="text/javascript">
+        $.material.init()
+</script>
+</html>

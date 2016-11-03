@@ -1,0 +1,19 @@
+<div ng-controller="LoginController">
+	<form class='well' name="login" ng-submit="loginUser()">
+        <div class="form-group label-floating">
+          <label class="control-label" for="username">Username</label>
+          <input class="form-control" required ng-model='username' id="username" name="username" type="text">
+        </div>
+        <div class='help-block' ng-messages='login.username.$error' ng-show='login.username.$touched'>
+    		    <div style="color:red" ng-message='required'>Username is required</div>
+		    </div>
+        <div class="form-group label-floating">
+          <label class="control-label" for="password">Password</label>
+          <input class="form-control" ng-model='password' required id="password" name='pass' type="password">
+        </div>
+        <div class='help-block' ng-messages='login.pass.$error' ng-show='login.pass.$touched'>
+    		    <div style="color:red" ng-message='required'>Password is required</div>
+		    </div>
+        <input type='submit' ng-disabled="login.$invalid" class='btn btn-success btn-raised' value='LOGIN'>
+    </form>
+</div>
