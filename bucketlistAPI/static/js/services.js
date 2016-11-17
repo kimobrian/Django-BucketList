@@ -11,7 +11,6 @@ app.service('HostService', ['$location', function($location){
 }])
 
 app.service('LoginService', ['Restangular','HostService', function(Restangular, HostService){
-
       this.baseUrl = HostService.getBaseUrl()
       Restangular.setBaseUrl(this.baseUrl)
       this.loginUser = function(data){
@@ -25,14 +24,32 @@ app.service('LoginService', ['Restangular','HostService', function(Restangular, 
         var details = userDetailsRoute.get({},{"Authorization":"Token "+token})
         return details
       }
+
+      this.logoutUser = function(token){
+        Restangular.setDefaultHeaders({'Authorization': 'Token ' + token });
+        var userDetailsRoute = Restangular.one('/auth/logout/')
+        var logoutResponse = userDetailsRoute.post()
+        return logoutResponse
+      }
 }])
 
-app.service('RegistrationService', ['HostService', function(Host){
-    this.baseUrl = HostService
-    var registerUser = function(data){
+app.service('RegistrationService', ['HostService','Restangular', function(HostService, Restangular){
+    this.baseUrl = HostService.getBaseUrl()
+    Restangular.setBaseUrl(this.baseUrl)
+    this.registerUser = function(data){
         // Register User
         var regRoute = Restangular.all('/auth/register/')
         var register = regRoute.post(data)
         return register
     }
+}])
+
+app.service('BucketLists', ['Restangular', 'HostService', function(Restangular, HostService){
+  this.baseUrl = HostService.getBaseUrl()
+  Restangular.setBaseUrl(this.baseUrl)
+  this.getBucketLists = function(token){
+      Restangular.setDefaultHeaders({'Authorization': 'Token ' + token });
+      var bucketlists = Restangular.all('/bucketlists/')
+      return bucketlists.getList()
+  }
 }])

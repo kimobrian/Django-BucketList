@@ -1,5 +1,8 @@
 <div ng-controller="LoginController">
-	<form class='well' name="login" ng-submit="loginUser()">
+        <div style="color: red" ng-if="error_invalid">
+          Invalid Login Details
+        </div>
+	<form class='well' name="login" ng-submit="loginUser()" method="post">     
         <div class="form-group label-floating">
           <label class="control-label" for="username">Username</label>
           <input class="form-control" required ng-model='username' id="username" name="username" type="text">

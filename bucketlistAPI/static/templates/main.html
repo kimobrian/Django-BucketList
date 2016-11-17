@@ -1,0 +1,24 @@
+<div ng-controller="DashboardCtrl">
+<ul class="topnav" id="myTopnav">
+  <li><a class="active not-active" style="font-family: 'Ewert', cursive;" href="#">The BucketList</a></li>
+  <li class = 'floatright'><a class="logout" style="color: white" ng-click="logoutUser()">Logout</a></li>
+  <li class ='floatright'><a class="not-active username" style="color: white">{{logged_in_username}}</a></li>
+  <li class="icon">
+    <a href="javascript:void(0);" style="font-size:15px;" onclick="myFunction()">☰</a>
+  </li>
+</ul>
+</div>
+<div class="row">
+    <div class="col-lg-6 col-md-6 col-xm-12 col-sm-6">Bucketlists</div>
+    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-6">Bucketlist Items</div>
+</div>
+<script>
+function myFunction() {
+    var x = document.getElementById("myTopnav");
+    if (x.className === "topnav") {
+        x.className += " responsive";
+    } else {
+        x.className = "topnav";
+    }
+}
+</script>

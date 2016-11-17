@@ -15,11 +15,11 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-# import rest_framework_jwt.views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    # url(r'^auth/login', rest_framework_jwt.views.obtain_jwt_token),
+    url(r'^docs/', include('rest_framework_swagger.urls')),
+    url(r'^docs2/', include('rest_framework_docs.urls')),
     url(r'^auth/', include('djoser.urls.authtoken')),
     url(r'^', include('api.urls')),
 ]

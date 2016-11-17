@@ -3,36 +3,49 @@
     color: red
   }
 </style>
-<div ng-controller="RegisterController">
-	<form class='well' name="regform">
+<div ng-controller="RegistrationController">
+<div class="help-block" ng-if="username_exists" style="color:red">
+  Username already exists
+</div>
+	<form class='well' name="regform" ng-submit="registerUser()">
         <div class="form-group label-floating">
           <label class="control-label" for="username">Username</label>
           <input class="form-control" id="username" ng-model="username" name="username" required type="text">
-          <div class="help-block" ng-messages="regform.username.$error" ng-show="regform.username.$touched">
-            <div class="ng-errors" ng-message="required">Username is required</div>
-          </div>
         </div>
+        <div class="help-block" ng-messages="regform.username.$error" ng-show="regform.username.$touched">
+            <div style="color:red" ng-message="required">Username is required</div>
+        </div>
+
         <div class="form-group label-floating">
           <label class="control-label" for="email" name="email" ng-model="email">Email address</label>
-          <input class="form-control" id="email" required type="email">
-          <div ng-messages="regform.enail.$error" ng-show="regform.email.$touched">
-            <div class="help-block" class="ng-errors">The email address is required</div>
-          </div>
+          <input class="form-control" id="email" ng-model="email" name="email" required type="email">
         </div>
+        <div ng-messages="regform.email.$error" style="color:red" ng-show="regform.email.$touched">
+            <div ng-message="required" class="help-block">The email address is required</div>
+        </div>
+
         <div class="form-group label-floating">
           <label class="control-label" for="password">Password</label>
           <input class="form-control" name='password' required ng-model='pass' ng-minlength='8' id="password" type="password">
-          <div ng-messages="regform.password.1error" ng-show="regform.password.1touched">
-            <div class="ng-errors" class="help-block"></div>
-          </div>
         </div>
-        <div class='help-block' ng-messages='regform.password.$error' ng-show='regform.password.$touched'>
-    		  <div class="ng-errors" ng-message='minlength'>Password should be atleast 8 Characters</div>
-		    </div>
+        <div ng-messages="regform.password.$error" style="color:red" ng-show="regform.password.$touched">
+            <div ng-message="required" class="help-block">Password is Required</div>
+            <div ng-message='minlength' class="help-block">Password should be atleast 8 Characters</div>
+        </div>
+
         <div class="form-group label-floating">
           <label class="control-label" for="conf-password">Confirm Password</label>
-          <input class="form-control" id="conf-password" required type="password">
+          <input class="form-control" id="conf_password" ng-pattern="pass" ng-model="conf_password" name="conf_password" required type="password">
         </div>
+        <div ng-messages="regform.conf_password.$error" style="color:red" ng-show="regform.conf_password.$touched">
+          <div ng-message="required" class="help-block">Password Confirmation is Required</div>
+          <div ng-message="pattern" class="help-block">Confirmation password does not match password</div>
+        </div>
+        <!-- <div ng-if="regform.password.$dirty && regform.conf_password.$dirty">
+          <div style="color:red" class="help-block" ng-if="regform.password != regform.conf_password">
+            Confirmation password does not match password
+          </div>
+        </div> -->
         <input type='submit' ng-disabled="regform.$invalid" class='btn btn-raised btn-primary' value='REGISTER'>
     </form>
 </div>

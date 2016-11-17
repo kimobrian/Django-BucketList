@@ -1,26 +1,17 @@
 from api.custom_permission import IsOwner
-from django.shortcuts import render, get_object_or_404
 from api.models import BucketList, BucketListItem
-from rest_framework_swagger.views import get_swagger_view
-from rest_framework.generics import (
-    ListCreateAPIView, CreateAPIView, RetrieveUpdateDestroyAPIView)
+from django.shortcuts import render, get_object_or_404
+from rest_framework.generics import (ListAPIView, UpdateAPIView,
+                                     DestroyAPIView, CreateAPIView,
+                                     RetrieveAPIView)
 from rest_framework.permissions import IsAuthenticated
 from api.pagination import BucketListPagination
 from api.serializers import (BucketListItemSerializer,
                              BucketListSerializer)
-from rest_framework.renderers import TemplateHTMLRenderer
-from rest_framework.views import APIView
-from rest_framework.response import Response
-
-schema_view = get_swagger_view(title='Bucketlist API')
 
 
 def index(request):
     return render(request, 'index.html', {})
-
-
-def dashboard(request):
-    return render(request, 'main.html', {})
 
 
 def current_bucketlist(obj):
@@ -33,18 +24,9 @@ def current_bucketlist(obj):
     )
 
 
-class HomePageView(APIView):
-    # permission_classes = (IsAuthenticated, IsOwner)
-    renderer_classes = (TemplateHTMLRenderer,)
-
-    def get(self, request, *args, **kwargs):
-        return Response(template_name='main.html')
-
-
-class BucketListView(ListCreateAPIView):
+class BucketListView(ListAPIView, CreateAPIView):
     """
-    Returns list of bucketlists(GET request)
-    Creates new bucket list (POST request)
+    Creates a bucketlist(POST) and return bucketlists(GET)
 
     Method: GET
       Parameters:
@@ -74,8 +56,9 @@ class BucketListView(ListCreateAPIView):
         return queryset
 
 
-class SingleBucketListView(RetrieveUpdateDestroyAPIView):
+class SingleBucketListView(RetrieveAPIView, UpdateAPIView, DestroyAPIView):
     """
+    Retrieves(GET) , Updates(PUT) and Deletes(DELETE) a bucketlist
     Return single bucketlist and its items(GET request)
     Update single bucketlist(PUT request)
     Delete Single Bucketlist(DELETE Request)
@@ -117,15 +100,17 @@ class BucketListItemsCreationView(CreateAPIView):
     """
     serializer_class = BucketListItemSerializer
     permission_classes = (IsAuthenticated, IsOwner)
+    # authentication_classes = (TokenAuthentication)
 
     def perform_create(self, serializer):
         bucketlist = current_bucketlist(self)
         serializer.save(bucketlist=bucketlist)
 
 
-class BucketListItemOperationsView(RetrieveUpdateDestroyAPIView):
+class BucketListItemOperationsView(UpdateAPIView, DestroyAPIView):
 
     """
+    Updates(PUT) and Deletes(DELETE) a bucketlist Item
     Update bucketlist Item(PUT)
     Delete bucketlist Item(DELETE)
 
