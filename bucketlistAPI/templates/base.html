@@ -26,15 +26,7 @@
   <script type="text/javascript" src="{% static 'js/app.js' %}"></script>
   <script type="text/javascript" src="{% static 'lib/ngstorage/ngstorage.min.js' %}"></script>
   <link rel="stylesheet" href="{% static 'css/style.css' %}" />
-  <link rel="stylesheet" type="text/css" href="{% static 'lib/font-awesome/css/font-awesome.min.css' %}">
   <link href="https://fonts.googleapis.com/css?family=Allura|Cormorant+Upright|Delius+Unicase|Eczar|Ewert|Great+Vibes|Homemade+Apple|Marck+Script|Merienda+One|Montez|Pacifico|Playball|Reenie+Beanie|Sacramento|Satisfy|Special+Elite|Tangerine" rel="stylesheet">
-  <script type="text/javascript" src="{% static 'lib/facebox/src/facebox.js' %}"></script>
-  <link rel="stylesheet" type="text/css" href="{% static 'lib/facebox/src/facebox.css' %}">
-  <script type="text/javascript">
-  jQuery(document).ready(function($) {
-    $('a[rel*=facebox]').facebox()
-  })
-  </script>
 </head>
 
 <body ng-app="BucketListApp" ng-cloak>
@@ -45,5 +37,13 @@
 <script type="text/javascript">
 $.material.init()
 </script>
+<noscript>
+  <style type="text/css">
+  #whole_content {
+    display: none;
+  }
+  </style>
+  Your browser does not support javascript or its disabled.
+</noscript>
 
 </html>
