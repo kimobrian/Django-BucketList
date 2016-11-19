@@ -32,6 +32,7 @@
     "angular-resource": "^1.5.8",
     "restangular": "^1.5.2",
     "ngstorage": "^0.3.11",
-    "font-awesome": "fontawesome#^4.7.0"
+    "font-awesome": "fontawesome#^4.7.0",
+    "facebox": "*"
   }
 }

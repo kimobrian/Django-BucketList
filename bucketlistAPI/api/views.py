@@ -1,13 +1,14 @@
 from api.custom_permission import IsOwner
 from api.models import BucketList, BucketListItem
+from api.pagination import BucketListPagination
+from api.serializers import (BucketListItemSerializer,
+                             BucketListSerializer)
 from django.shortcuts import render, get_object_or_404
 from rest_framework.generics import (ListAPIView, UpdateAPIView,
                                      DestroyAPIView, CreateAPIView,
                                      RetrieveAPIView)
 from rest_framework.permissions import IsAuthenticated
-from api.pagination import BucketListPagination
-from api.serializers import (BucketListItemSerializer,
-                             BucketListSerializer)
+from rest_framework.response import Response
 
 
 def index(request):
@@ -55,6 +56,11 @@ class BucketListView(ListAPIView, CreateAPIView):
         queryset = BucketList.objects.filter(created_by=self.request.user)
         return queryset
 
+    def list(self, request):
+        queryset = self.get_queryset()
+        serializer = self.get_serializer(queryset, many=True)
+        return Response([serializer.data])
+
 
 class SingleBucketListView(RetrieveAPIView, UpdateAPIView, DestroyAPIView):
     """
@@ -82,7 +88,6 @@ class SingleBucketListView(RetrieveAPIView, UpdateAPIView, DestroyAPIView):
 
     """
     queryset = BucketList.objects.all()
-    pagination_class = BucketListPagination
     serializer_class = BucketListSerializer
     permission_classes = (IsAuthenticated, IsOwner)
     lookup_field = 'id'
@@ -100,14 +105,14 @@ class BucketListItemsCreationView(CreateAPIView):
     """
     serializer_class = BucketListItemSerializer
     permission_classes = (IsAuthenticated, IsOwner)
-    # authentication_classes = (TokenAuthentication)
 
     def perform_create(self, serializer):
         bucketlist = current_bucketlist(self)
         serializer.save(bucketlist=bucketlist)
 
 
-class BucketListItemOperationsView(UpdateAPIView, DestroyAPIView):
+class BucketListItemOperationsView(UpdateAPIView,
+                                   DestroyAPIView, RetrieveAPIView):
 
     """
     Updates(PUT) and Deletes(DELETE) a bucketlist Item
@@ -132,7 +137,7 @@ class BucketListItemOperationsView(UpdateAPIView, DestroyAPIView):
 
     def get_queryset(self):
         bucketlist = current_bucketlist(self)
-        item_id = self.kwargs.get('id')  # Bucketlist Item ID
+        item_id = self.kwargs.get('pk')  # Bucketlist Item ID
         queryset = BucketListItem.objects.filter(
             bucketlist=bucketlist).filter(id=item_id)
         return queryset

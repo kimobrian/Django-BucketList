@@ -1,31 +1,32 @@
-h2{
-	text-shadow: 2px 2px #9D2933;
+h2 {
+  text-shadow: 2px 2px #9D2933;
 }
 
-.quote{
-	font-size: 30px;
-	font-family: andalus;
-	text-shadow: 1px 1px 30px rgba(255, 24, 107, 1);
-	font: bold;
+.quote {
+  font-size: 30px;
+  font-family: andalus;
+  text-shadow: 1px 1px 30px rgba(255, 24, 107, 1);
+  font: bold;
   font-family: 'Merienda One', cursive;
 }
 
-.loginpage{
+.loginpage {
   background-image: url('../images/bucket-list.jpg') no-repeat;
   background-size: cover;
 }
 
 .not-active {
-   pointer-events: none;
-   cursor: default;
-   color: white;
+  pointer-events: none;
+  cursor: default;
+  color: white;
 }
-.logout{
+
+.logout {
   cursor: pointer;
   font-family: 'Satisfy', cursive;
 }
 
-.username{
+.username {
   font-family: 'Delius Unicase', cursive;
 }
 
@@ -37,9 +38,13 @@ ul.topnav {
   background-color: #333;
 }
 
-ul.topnav li {float: left;}
+ul.topnav li {
+  float: left;
+}
 
-ul.topnav li.floatright {float: right;}
+ul.topnav li.floatright {
+  float: right;
+}
 
 ul.topnav li a {
   display: inline-block;
@@ -51,12 +56,18 @@ ul.topnav li a {
   font-size: 17px;
 }
 
-ul.topnav li a:hover {background-color: #555;}
+ul.topnav li a:hover {
+  background-color: #555;
+}
 
-ul.topnav li.icon {display: none;}
+ul.topnav li.icon {
+  display: none;
+}
 
 @media screen and (max-width:680px) {
-  ul.topnav li:not(:first-child) {display: none;}
+  ul.topnav li:not(: first-child) {
+    display: none;
+  }
   ul.topnav li.icon {
     float: right;
     display: inline-block;
@@ -64,7 +75,9 @@ ul.topnav li.icon {display: none;}
 }
 
 @media screen and (max-width:680px) {
-  ul.topnav.responsive {position: relative;}
+  ul.topnav.responsive {
+    position: relative;
+  }
   ul.topnav.responsive li.icon {
     position: absolute;
     right: 0;
@@ -78,4 +91,38 @@ ul.topnav li.icon {display: none;}
     display: block;
     text-align: left;
   }
+}
+
+.bucketlist {
+  min-height: 15px;
+  padding: 10px;
+  margin-bottom: 20px;
+  background-color: #f5f5f5;
+  border: 1px solid #e3e3e3;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+}
+
+.blist_date {
+  font-family: 'Marck Script', cursive;
+}
+
+.blist_items {
+  list-style-type: none;
+  font-family: 'Cormorant Upright', serif;
+  font-size: 18px;
+}
+
+.form-control,
+.form-group .form-control {
+  background-color: #ffffff;
+  padding-left: 10px;
+  border-radius: 20px;
+  border-color: #006442;
+}
+
+.form-control,
+.form-group .form-control:focus {
+  border-color: #049372;
 }
