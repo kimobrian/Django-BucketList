@@ -126,3 +126,7 @@ ul.topnav li.icon {
 .form-group .form-control:focus {
   border-color: #049372;
 }
+
+.pull-right {
+  float: right;
+}

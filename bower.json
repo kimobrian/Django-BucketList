@@ -25,12 +25,12 @@
     "angular": "~1.5.3",
     "angular-sanitize": "~1.5.3",
     "angular-animate": "~1.5.3",
-    "angular-material": "~1.1.0-rc2",
+    "angular-aria": "^1.4.8",
     "bootstrap-material-design": "^4.0.2",
     "angular-ui-router": "^0.3.2",
     "angular-messages": "^1.5.8",
     "angular-resource": "^1.5.8",
     "restangular": "^1.5.2",
-    "ngstorage": "^0.3.11",
+    "ngstorage": "^0.3.11"
   }
 }
