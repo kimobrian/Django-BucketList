@@ -82,6 +82,8 @@ app2.service('BucketLists', ['Restangular', 'HostService', function(Restangular,
       bucketlist.name = blist_name
       bucketlist.put().then(function(response) {
         callback(response)
+      }, function(error){
+        callback(error)
       })
     }, function(error) {
       console.log('Error Occurred')
@@ -101,17 +103,27 @@ app2.service('BucketlistItemService', ['Restangular', 'HostService', function(Re
     return createItemRequest
   }
 
-  this.updateBucketlistItem = function(auth_token, blist_id, item_id, item_name, callback) {
+  this.updateBucketlistItem = function(auth_token, blist_id, item_id, item_name, status, callback) {
     Restangular.setDefaultHeaders({ 'Authorization': 'Token ' + auth_token });
     Restangular.setRequestSuffix('/');
     var updateBucketlistItemRouter = Restangular.one("bucketlists/" + blist_id + "/items/", item_id)
     updateBucketlistItemRouter.get().then(function(bucketlist_item) {
       bucketlist_item.item_name = item_name
+      if (status) { bucketlist_item.done = true } else { bucketlist_item.done = false }
       bucketlist_item.put().then(function(response) {
         callback(response)
       }, function(error) {
-        console.log("Error Occurred")
-        console.log(error)
+        callback(error)
+      })
+    })
+  }
+
+  this.deleteBucketListItem = function(blist_id, item_id, auth_token, callback) {
+    Restangular.setDefaultHeaders({ 'Authorization': 'Token ' + auth_token });
+    var deleteBucketListItemRouter = Restangular.one('/bucketlists/'+blist_id+'/items/', item_id)
+    deleteBucketListItemRouter.get().then(function(bucketlist_item) {
+      return bucketlist_item.remove().then(function(res) {
+        callback(res)
       })
     })
   }
