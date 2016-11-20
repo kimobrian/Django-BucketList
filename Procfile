@@ -1,0 +1,1 @@
+web: python bucketlistAPI/manage.py migrate; gunicorn --pythonpath bucketlistAPI bucketlistAPI.wsgi

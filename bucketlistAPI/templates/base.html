@@ -12,8 +12,9 @@
   <script type="text/javascript" src="{% static 'lib/tether/dist/js/tether.min.js'%}"></script>
   <script type="text/javascript" src="{% static 'lib/bootstrap/dist/js/bootstrap.min.js' %}"></script>
   <link rel="stylesheet" href="{% static 'lib/bootstrap-material-design/dist/css/bootstrap-material-design.min.css' %}" />
-  <script type="text/javascript" src="{% static 'lib/bootstrap-material-design/dist/js/material.min.js' %}"></script>
-  <script type="text/javascript" src="{% static 'lib/bootstrap-material-design/dist/js/ripples.min.js' %}"></script>
+  <link rel="stylesheet" href="{% static 'lib/bootstrap-material-design/dist/css/ripples.min.css' %}" />
+  <script type="text/javascript" src="{% static 'lib/dist/bootstrap-material-design/js/bootstrapMaterialDesign.js' %}"></script>
+  <script type="text/javascript" src="{% static 'lib/bootstrap-material-design/dist/js/ripples.js' %}"></script>
   <script type="text/javascript" src="{% static 'lib/lodash/dist/lodash.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'lib/angular/angular.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'lib/angular-animate/angular-animate.min.js' %}"></script>
@@ -24,7 +25,7 @@
   <script type="text/javascript" src="{% static 'lib/restangular/src/restangular.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/services.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/app.js' %}"></script>
-  <script type="text/javascript" src="{% static 'lib/ngstorage/ngstorage.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'lib/ngstorage/ngStorage.min.js' %}"></script>
   <link rel="stylesheet" href="{% static 'css/style.css' %}" />
   <link href="https://fonts.googleapis.com/css?family=Allura|Cormorant+Upright|Delius+Unicase|Eczar|Ewert|Great+Vibes|Homemade+Apple|Marck+Script|Merienda+One|Montez|Pacifico|Playball|Reenie+Beanie|Sacramento|Satisfy|Special+Elite|Tangerine" rel="stylesheet">
 </head>
@@ -37,5 +38,13 @@
 <script type="text/javascript">
 $.material.init()
 </script>
+<noscript>
+  <style type="text/css">
+  #whole_content {
+    display: none;
+  }
+  </style>
+  Your browser does not support javascript or its disabled.
+</noscript>
 
 </html>
