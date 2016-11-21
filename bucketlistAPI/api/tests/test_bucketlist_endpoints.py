@@ -24,27 +24,6 @@ class BucketListsTests(APITestCase):
         self.client.force_authenticate(token=self.token)
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token)
 
-        # Test user
-        user = User()
-        user.username = 'testuser2'
-        user.email = 'test2@email.com'
-        user.password = 'pass1234'
-        user.save()
-
-        # Test bucketlist
-        bucketlist = BucketList()
-        bucketlist.name = 'First Bucketlist'
-        bucketlist.created_by = user
-        bucketlist.save()
-
-    def test_creation_of_bucketlist(self):
-        """Test when a bucketlist is created"""
-        response = self.client.post('/bucketlists/',
-                                    {'name': 'Test Bucketlist'},
-                                    format='json')
-        self.assertIn('Test Bucketlist', str(response.data))
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-
     def test_forbidden_access_to_bucket_list(self):
         """Test that user can only access a bucketlist they created"""
         user = User()
@@ -78,6 +57,23 @@ class BucketListsTests(APITestCase):
         self.assertEqual(
             response.data, {"name": ["This field may not be blank."]})
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_successful_creation_of_bucketlist(self):
+        """Test for successful creation of bucketlist"""
+        response = self.client.post(
+            '/bucketlists/', data={"name": "bucketlist name"}, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertIn('bucketlist name', str(response.data))
+
+    def test_creation_of_duplicate_bucketlist(self):
+        """Test creation of duplicate bucketlist"""
+        self.client.post(
+            '/bucketlists/', data={"name": "bucketlist name"}, format='json')
+        response = self.client.post(
+            '/bucketlists/', data={"name": "bucketlist name"}, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data,
+                         {"name": ["Bucketlist name Exists"]})
 
     def test_update_of_bucketlist(self):
         """Test for update of bucketlist"""

@@ -56,13 +56,6 @@ app.filter('datefilter', function() {
   }
 })
 
-app.filter('offset', function() {
-  return function(input, start) {
-    start = parseInt(start, 10);
-    return input.slice(start);
-  };
-});
-
 
 app.controller('DashboardCtrl', ['$scope', '$window', '$localStorage', 'LoginService', '$state', 'BucketLists', 'BucketlistItemService',
 
@@ -108,7 +101,7 @@ app.controller('DashboardCtrl', ['$scope', '$window', '$localStorage', 'LoginSer
       logoutStatus.then(function(response) {
         delete $localStorage.authentication_token
         $state.go('index.login', {}, reload = true)
-        window.location.reload()
+        $scope.win.location.reload()
       }, function(error) {
         console.log('Error Logout')
         if (error.status == -1) {
@@ -153,19 +146,26 @@ app.controller('DashboardCtrl', ['$scope', '$window', '$localStorage', 'LoginSer
           })
         })
       }else{
-
       }
     }
 
     $scope.editBucketListSubmit = function(blist_id, name, index) {
       $scope.listEditMode[index] = false
       BucketLists.updateBucketlist(blist_id, auth_token, name, function(response) {
-        if(response.data.name[0] == "Bucketlist name Exists"){
-          alert("Bucketlist name already exists")
-          $scope.bucketlists[index].name = name
-          updateUI(index)
+        try{
+          if(response.data.name[0] == "Bucketlist name Exists"){
+            alert("Bucketlist name already exists")
+            $scope.bucketlists[index].name = name
+            updateUI(index)
+          }
+        }catch(TypeError){
+
         }
       })
+    }
+
+    $scope.page = function(pag){
+      alert(pag)
     }
 
     $scope.cancelBucketlist = function(index) {
@@ -191,6 +191,8 @@ app.controller('DashboardCtrl', ['$scope', '$window', '$localStorage', 'LoginSer
 
     $scope.editItemSubmit = function(item_id, index, item_name, status, current_blist_index) {
       $scope.itemEditMode[index] = false
+      $scope.current_blist_index = current_blist_index
+      
       BucketlistItemService.updateBucketlistItem(auth_token, $scope.current_bucket_list, item_id, item_name, status, function(response) {
         try{
           if(response.data.item_name[0] == "Item name already exists"){
@@ -210,6 +212,8 @@ app.controller('DashboardCtrl', ['$scope', '$window', '$localStorage', 'LoginSer
 
     $scope.createBucketlistItem = function(blist_id, index) {
       updateUI(index)
+      $scope.current_bucket_list = blist_id
+      $scope.current_blist_index = index
       angular.forEach($scope.itemAddMode, function(value, key) {
         $scope.itemAddMode[key] = false
       })

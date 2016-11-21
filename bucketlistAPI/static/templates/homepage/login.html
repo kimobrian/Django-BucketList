@@ -1,5 +1,5 @@
 <div ng-controller="LoginController">
-        <div style="color: red" ng-if="error_invalid">
+        <div style="color: red" id="invalid_error" ng-if="error_invalid">
           Invalid Login Details
         </div>
 	<form class='well' name="login" ng-submit="loginUser()" method="post">     
@@ -17,6 +17,6 @@
         <div class='help-block' ng-messages='login.pass.$error' ng-show='login.pass.$touched'>
     		    <div style="color:red" ng-message='required'>Password is required</div>
 		    </div>
-        <input type='submit' ng-disabled="login.$invalid" class='btn btn-success btn-raised' value='LOGIN'>
+        <input type='submit' ng-disabled="login.$invalid" class='btn btn-success btn-raised' id="loginBtn" value='LOGIN'>
     </form>
 </div>

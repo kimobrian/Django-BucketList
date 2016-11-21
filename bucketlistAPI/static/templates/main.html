@@ -18,12 +18,11 @@
         <div ng-messages="new_list.list_name.$error" ng-show="new_list.list_name.$touched && newItem">
           <div class="help-block" style="color: red;" ng-message="required">Bucketlist Name is required</div>
         </div>
-        <input type="submit" class="btn btn-info btn-raised btn-sm" ng-click="createNewList(list_name, current_blist_index)" ng-disabled="new_list.$invalid" name="create_list" value="Create List">
+        <input type="submit" class="btn btn-info btn-raised btn-sm" ng-click="createNewList(list_name, current_blist_index)" ng-disabled="new_list.$invalid" name="create_list" id="create_list" value="Create List">
       </form>
     </div>
-    <div class="btn btn-block btn-primary">Click on BucketList To View Items</div>
-    <div ng-repeat="bl in bucketlists| offset: currentPage*itemsPerPage |
-  limitTo: itemsPerPage">
+      <div ng-repeat="bl in bucketlists">
+    <!-- <div dir-paginate="bl in bucketlists | itemsPerPage: 5"> -->
       <div class="bucketlist">
         <div class="blist_date">{{bl.date_created | datefilter}}</div>
         <button ng-if="!listEditMode[$index]" class="btn btn-success btn-raised btn-xs pull-right" ng-click="editBucketlist(bl.id, $index)">Edit</button>
@@ -67,9 +66,7 @@
     <div class="btn btn-block btn-primary">{{current_selection}}</div>
     <div class="bucketlist_items">
       <ul ng-repeat="item in current_items">
-        <li ng-if="!itemEditMode[$index]" class="blist_items">{{$index+1}} ) <i style="color: #9D2933
-;" class="fa fa-remove" ng-show="!item.done"></i><i style="color: #26A65B
-;" class="fa fa-check" ng-show="item.done"></i>{{item.item_name}}
+        <li ng-if="!itemEditMode[$index]" class="blist_items">{{$index+1}} ) <i style="color: #9D2933;" class="fa fa-remove" ng-show="!item.done"></i><i style="color: #26A65B;" class="fa fa-check" ng-show="item.done"></i>{{item.item_name}}
           <button class="btn btn-success btn-raised btn-xs pull-right" ng-click="editItem(item.id, $index)">Edit</button>
           <button class="btn btn-danger btn-raised btn-xs pull-right" ng-click="deleteItem(item.id, $index, current_bucket_list, current_blist_index)">Delete</button>
         </li>
