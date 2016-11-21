@@ -30,7 +30,9 @@
     "angular-ui-router": "^0.3.2",
     "angular-messages": "^1.5.8",
     "angular-resource": "^1.5.8",
+    "fontawesome": "~4.1.0",
     "restangular": "^1.5.2",
-    "ngstorage": "^0.3.11"
+    "ngstorage": "^0.3.11",
+    "angularUtils-pagination": "angular-utils-pagination#^0.11.1"
   }
 }

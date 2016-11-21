@@ -91,5 +91,6 @@ class BucketListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = BucketList
+        ordering = ('date_created')
         fields = ('id', 'name', 'created_by',
                   'date_created', 'date_modified', 'bucketlist_items')

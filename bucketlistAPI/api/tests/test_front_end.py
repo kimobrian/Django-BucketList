@@ -5,7 +5,7 @@ from selenium import webdriver
 class FrontEndViewsTests(LiveServerTestCase):
 
     def setUp(self):
-        self.selenium = webdriver.Firefox()
+        self.selenium = webdriver.Chrome()
 
     def tearDown(self):
         self.selenium.quit()
