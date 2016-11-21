@@ -21,9 +21,8 @@
         <input type="submit" class="btn btn-info btn-raised btn-sm" ng-click="createNewList(list_name, current_blist_index)" ng-disabled="new_list.$invalid" name="create_list" value="Create List">
       </form>
     </div>
-    <div class="btn btn-block btn-primary">Click on BucketList To View Items</div>
-    <div ng-repeat="bl in bucketlists| offset: currentPage*itemsPerPage |
-  limitTo: itemsPerPage">
+    <div ng-repeat="bl in bucketlists">
+    <div dir-paginate="bl in bucketlists | itemsPerPage: 5">
       <div class="bucketlist">
         <div class="blist_date">{{bl.date_created | datefilter}}</div>
         <button ng-if="!listEditMode[$index]" class="btn btn-success btn-raised btn-xs pull-right" ng-click="editBucketlist(bl.id, $index)">Edit</button>
