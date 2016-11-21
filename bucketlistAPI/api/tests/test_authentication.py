@@ -38,15 +38,6 @@ class UserAuthenticationTests(APITestCase):
                          "Unable to login with provided credentials."]})
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
-    def test_login_with_blank_username_and_password(self):
-        """Test login with  blank username and password fields"""
-        data = {"username": "", "password": ""}
-        response = self.client.post('/auth/login/', data=data)
-        self.assertEqual(response.data, {"password": [
-                         "This field may not be blank."],
-            "username": ["This field may not be blank."]})
-        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-
     def test_login_with_invalid_creadentials(self):
         """Test login with wrong username password combination"""
         data = {"username": "wrong", "password": "wrong"}

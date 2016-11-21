@@ -56,13 +56,6 @@ app.filter('datefilter', function() {
   }
 })
 
-app.filter('offset', function() {
-  return function(input, start) {
-    start = parseInt(start, 10);
-    return input.slice(start);
-  };
-});
-
 
 app.controller('DashboardCtrl', ['$scope', '$window', '$localStorage', 'LoginService', '$state', 'BucketLists', 'BucketlistItemService',
 
