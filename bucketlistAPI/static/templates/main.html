@@ -22,8 +22,7 @@
       </form>
     </div>
     <div class="btn btn-block btn-primary">Click on BucketList To View Items</div>
-    <div ng-repeat="bl in bucketlists| offset: currentPage*itemsPerPage |
-  limitTo: itemsPerPage">
+    <div dir-paginate="bl in bucketlists | itemsPerPage: 4">
       <div class="bucketlist">
         <div class="blist_date">{{bl.date_created | datefilter}}</div>
         <button ng-if="!listEditMode[$index]" class="btn btn-success btn-raised btn-xs pull-right" ng-click="editBucketlist(bl.id, $index)">Edit</button>
@@ -62,6 +61,7 @@
         </div>
       </div>
     </div>
+    <dir-pagination-controls></dir-pagination-controls>
   </div>
   <div class="col-lg-6 col-md-6 col-xs-12 col-sm-6">
     <div class="btn btn-block btn-primary">{{current_selection}}</div>

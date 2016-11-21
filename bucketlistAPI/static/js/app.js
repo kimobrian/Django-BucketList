@@ -1,4 +1,4 @@
-var app = angular.module('BucketListApp', ['ui.router', 'ngStorage', 'ngMessages', 'LoginPageService', 'BucketlistOperationService'])
+var app = angular.module('BucketListApp', ['ui.router', 'ngStorage', 'ngMessages', 'LoginPageService', 'BucketlistOperationService', 'angularUtils.directives.dirPagination'])
 
 app.config(['$stateProvider', '$urlRouterProvider', 'RestangularProvider', function($stateProvider, $urlRouterProvider, RestangularProvider) {
   $urlRouterProvider.otherwise('/index')
