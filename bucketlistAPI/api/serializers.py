@@ -36,6 +36,22 @@ class BucketListItemSerializer(serializers.ModelSerializer):
     """Serializer for BucketListItem model"""
     item_name = serializers.CharField(max_length=100, required=True)
 
+    def validate_item_name(self, item_name):
+        """Ensure no duplicate item name"""
+        view = self.context['view']
+        blist_id = view.kwargs['id']
+        if self.context['request'].method == "POST":
+            check_blist_item = BucketListItem.objects.filter(
+                item_name__iexact=item_name, bucketlist=blist_id)
+        elif self.context['request'].method == "PUT":
+            item_id = view.kwargs['pk']
+            check_blist_item = BucketListItem.objects.filter(
+                item_name__iexact=item_name,
+                bucketlist=blist_id).exclude(id=item_id)
+        if check_blist_item:
+            raise serializers.ValidationError('Item name already exists')
+        return item_name
+
     def validate(self, data):
         """Bucket list item name can not be empty."""
         if data['item_name'] == '':
@@ -55,15 +71,20 @@ class BucketListSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
         """Bucketlist name can not be empty"""
-        print(data)
         if not data["name"]:
             raise serializers.ValidationError('Bucketlist name is required.')
         return data
 
     def validate_name(self, name):
         user = self.context['request'].user
-        check_bucketlist = BucketList.objects.filter(name__iexact=name,
-                                                     created_by=user)
+        view = self.context['view']
+        if self.context['request'].method == "POST":
+            check_bucketlist = BucketList.objects.filter(name__iexact=name,
+                                                         created_by=user)
+        elif self.context['request'].method == "PUT":
+            bucketlist_id = view.kwargs['id']
+            check_bucketlist = BucketList.objects.filter(
+                name__iexact=name, created_by=user).exclude(id=bucketlist_id)
         if check_bucketlist:
             raise serializers.ValidationError("Bucketlist name Exists")
         return name

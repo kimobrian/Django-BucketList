@@ -1,7 +1,7 @@
 {
   "directory": "static/lib/",
   "name": "bucketlist",
-  "version": "1.1.7",
+  "version": "1.0.0",
   "authors": [
     "Brian Kimokoti <brian.kimokoti@andela.com>"
   ],
@@ -25,11 +25,14 @@
     "angular": "~1.5.3",
     "angular-sanitize": "~1.5.3",
     "angular-animate": "~1.5.3",
+    "angular-aria": "^1.4.8",
     "bootstrap-material-design": "^4.0.2",
     "angular-ui-router": "^0.3.2",
     "angular-messages": "^1.5.8",
     "angular-resource": "^1.5.8",
     "restangular": "^1.5.2",
-    "ngstorage": "^0.3.11"
+    "ngstorage": "^0.3.11",
+    "font-awesome": "^4.7.0",
+    "angularUtils-pagination": "angular-utils-pagination#^0.11.1"
   }
 }

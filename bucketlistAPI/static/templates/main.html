@@ -18,11 +18,11 @@
         <div ng-messages="new_list.list_name.$error" ng-show="new_list.list_name.$touched && newItem">
           <div class="help-block" style="color: red;" ng-message="required">Bucketlist Name is required</div>
         </div>
-        <input type="submit" class="btn btn-info btn-raised btn-sm" ng-click="createNewList(list_name)" ng-disabled="new_list.$invalid" name="create_list" value="Create List">
+        <input type="submit" class="btn btn-info btn-raised btn-sm" ng-click="createNewList(list_name, current_blist_index)" ng-disabled="new_list.$invalid" name="create_list" value="Create List">
       </form>
     </div>
     <div class="btn btn-block btn-primary">Click on BucketList To View Items</div>
-    <div ng-repeat="bl in bucketlists">
+    <div dir-paginate="bl in bucketlists | itemsPerPage: 6">
       <div class="bucketlist">
         <div class="blist_date">{{bl.date_created | datefilter}}</div>
         <button ng-if="!listEditMode[$index]" class="btn btn-success btn-raised btn-xs pull-right" ng-click="editBucketlist(bl.id, $index)">Edit</button>
@@ -61,27 +61,33 @@
         </div>
       </div>
     </div>
+    <dir-pagination-controls></dir-pagination-controls>
   </div>
   <div class="col-lg-6 col-md-6 col-xs-12 col-sm-6">
     <div class="btn btn-block btn-primary">{{current_selection}}</div>
     <div class="bucketlist_items">
       <ul ng-repeat="item in current_items">
-        <li ng-if="!itemEditMode[$index]" class="blist_items">{{$index+1}} ) {{item.item_name}}
+        <li ng-if="!itemEditMode[$index]" class="blist_items">{{$index+1}} ) <i style="color: #9D2933
+;" class="fa fa-remove" ng-show="!item.done"></i><i style="color: #26A65B
+;" class="fa fa-check" ng-show="item.done"></i>{{item.item_name}}
           <button class="btn btn-success btn-raised btn-xs pull-right" ng-click="editItem(item.id, $index)">Edit</button>
+          <button class="btn btn-danger btn-raised btn-xs pull-right" ng-click="deleteItem(item.id, $index, current_bucket_list, current_blist_index)">Delete</button>
         </li>
+        <br>
         <li class="blist_items" ng-if="itemEditMode[$index]">
           <form method="post" name="edit_item_form">
             {{$index+1}})
             <div class="form-group">
               <input type="text" class="form-control" ng-model="item.item_name" required name="item_name">
+              <input type="checkbox" name="done" ng-model="done"> Done
             </div>
             <div ng-messages="edit_item_form.item_name.$error" ng-show="edit_item_form.item_name.$touched">
               <div class="help-block" style="color:red;" ng-message="required">
                 Item name is required
               </div>
             </div>
-            <button ng-if="itemEditMode[$index]" class="btn btn-warning btn-raised btn-xs pull-right" ng-click="cancelBucketlistItem($index)">Cancel</button>
-            <button class="btn btn-success btn-raised btn-xs pull-right" ng-disabled="edit_item_form.$invalid" ng-click="editItemSubmit(item.id, $index, item.item_name)">Submit</button>
+            <button ng-if="itemEditMode[$index]" class="btn btn-warning btn-raised btn-xs pull-right" ng-click="cancelBucketlistItem($index, item.item_name, current_blist_index)">Cancel</button>
+            <button class="btn btn-success btn-raised btn-xs pull-right" ng-disabled="edit_item_form.$invalid" ng-click="editItemSubmit(item.id, $index, item.item_name, done, current_blist_index)">Submit</button>
           </form>
           <br>
         </li>
