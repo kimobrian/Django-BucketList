@@ -28,7 +28,7 @@
         <button ng-if="!listEditMode[$index]" class="btn btn-success btn-raised btn-xs pull-right" ng-click="editBucketlist(bl.id, $index)">Edit</button>
         <button ng-if="listEditMode[$index]" class="btn btn-warning btn-raised btn-xs pull-right" ng-click="cancelBucketlist($index)">Cancel</button>
         <button class="btn btn-danger btn-raised btn-xs pull-right" ng-click="deleteBucketlist(bl.id, bl.name)">Delete</button>
-        <button ng-if="!listEditMode[$index] && !itemEditMode[$index] && !itemAddMode[$index]" class="btn btn-info btn-raised btn-xs pull-right" ng-click="createBucketlistItem(bl.id, $index)">Add Item</button>
+        <button ng-if="!listEditMode[$index] && !itemEditMode[$index] && !itemAddMode[$index]" class="btn btn-info btn-raised btn-xs pull-right" id="addItemto{{$index}}" ng-click="createBucketlistItem(bl.id, $index)">Add Item</button>
         <hr>
         <div ng-if="listEditMode[$index]">
           <form method="post" name="blist_edit_form">
@@ -42,20 +42,20 @@
           </form>
         </div>
         <div ng-if="!listEditMode[$index]">
-          <div style="cursor: copy;" ng-click="getListItems(bl.id ,bl.name, $index)">{{bl.name}}</div>
+          <div style="cursor: copy;" id="blist{{$index}}" ng-click="getListItems(bl.id ,bl.name, $index)">{{bl.name}}</div>
         </div>
         <div ng-if="itemAddMode[$index] && !listEditMode[$index]">
           <hr>
           <form name="new_item_form" method="post">
             <div class="form-group">
-              <input type="text" class="form-control" placeholder="Enter Item Name" required ng-model="listitem" name="listitem">
+              <input type="text" class="form-control" id="blistitem{{$index}}" placeholder="Enter Item Name" required ng-model="listitem" name="listitem">
             </div>
             <div ng-messages="new_item_form.listitem.$error" ng-show="new_item_form.listitem.$touched">
               <div class="help-block" style="color:red" ng-message="required">
                 Please provide the item name
               </div>
             </div>
-            <button class="btn btn-raised btn-info btn-xs" ng-disabled="new_item_form.$invalid" ng-click="createNewBucketlistItem(bl.id, listitem, $index)">Add Item</button>
+            <button class="btn btn-raised btn-info btn-xs" ng-disabled="new_item_form.$invalid" ng-click="createNewBucketlistItem(bl.id, listitem, $index)" id="submitItem{{$index}}">Add Item</button>
             <button class="btn btn-raised btn-danger btn-xs" ng-click="cancelNewItem($index)">Cancel</button>
           </form>
         </div>
