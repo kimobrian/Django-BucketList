@@ -32,7 +32,7 @@ class ModelTests(TestCase):
         bucketlist_count_after = BucketList.objects.count()
         self.assertEqual(bucketlist_count_before - bucketlist_count_after, 1)
 
-    def test_user_bucketlist_relationship2(self):
+    def test_bucketlist_item_relationship(self):
         """
         Tests that when a bucketlist is deleted, all
         associated bucketlist items are deleted too
