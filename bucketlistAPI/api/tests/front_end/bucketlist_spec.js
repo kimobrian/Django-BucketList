@@ -29,7 +29,7 @@ describe('Bucketlist Application Front End Tests', function() {
       element(by.model("password")).sendKeys('testuser123')
       element(by.id('loginBtn')).click().then(function(){
         var random_bucketlist = Math.random().toString(36).substring(7);
-        element(by.model('list_name')).sendKeys(random_bucketlist) //Change bucketlist name for test
+        element(by.model('list_name')).sendKeys(random_bucketlist)
         element(by.id("create_list")).click().then(function(){
           browser.waitForAngular().then(function(){
               expect(element(by.tagName('body')).getText()).toContain(random_bucketlist);
@@ -37,4 +37,27 @@ describe('Bucketlist Application Front End Tests', function() {
       })    
     })
   }) 
+
+  it('Checks creation of a new bucketlist item', function(){
+    element(by.model("username")).sendKeys('test_user')
+    element(by.model("password")).sendKeys('testuser123')
+    element(by.id('loginBtn')).click().then(function(){
+        var random_bucketlist = Math.random().toString(36).substring(7);
+        element(by.model('list_name')).sendKeys(random_bucketlist)
+        element(by.id("create_list")).click().then(function(){
+          browser.waitForAngular().then(function(){
+              element(by.id("addItemto0")).click()
+              var random_bucketlist_item = Math.random().toString(36).substring(7);
+              element(by.id("blistitem0")).sendKeys(random_bucketlist_item)
+              element(by.id("submitItem0")).click().then(function(){
+                browser.waitForAngular().then(function(){
+                    expect(element(by.tagName('body')).getText()).toContain(random_bucketlist_item);
+                })
+              })
+          })
+      })    
+    })
+  })
 });
+
+
