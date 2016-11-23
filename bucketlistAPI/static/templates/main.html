@@ -8,12 +8,12 @@
     </li>
   </ul>
 </div>
-<div class="row">
+<div class="row" style="padding: 1%;">
   <div class="col-lg-6 col-md-6 col-xm-12 col-sm-6">
     <div>
       <form name="new_list" method="post">
         <div class="form-group">
-          <input type="text" class="form-control" required placeholder="New Bucketlist Name" name="list_name" ng-model="list_name">
+          <input type="text" class="form-control" required placeholder="Enter name to create new bucket list" name="list_name" ng-model="list_name">
         </div>
         <div ng-messages="new_list.list_name.$error" ng-show="new_list.list_name.$touched && newItem">
           <div class="help-block" style="color: red;" ng-message="required">Bucketlist Name is required</div>
@@ -23,32 +23,27 @@
     </div>
     <div ng-repeat="bl in bucketlists">
     <!-- <div dir-paginate="bl in bucketlists | itemsPerPage: 5"> -->
-      <div class="bucketlist">
-        <div class="blist_date">{{bl.date_created | datefilter}}</div>
-        <button ng-if="!listEditMode[$index]" class="btn btn-success btn-raised btn-xs pull-right" ng-click="editBucketlist(bl.id, $index)">Edit</button>
-        <button ng-if="listEditMode[$index]" class="btn btn-warning btn-raised btn-xs pull-right" ng-click="cancelBucketlist($index)">Cancel</button>
-        <button class="btn btn-danger btn-raised btn-xs pull-right" ng-click="deleteBucketlist(bl.id, bl.name)">Delete</button>
-        <button ng-if="!listEditMode[$index] && !itemEditMode[$index] && !itemAddMode[$index]" class="btn btn-info btn-raised btn-xs pull-right" id="addItemto{{$index}}" ng-click="createBucketlistItem(bl.id, $index)">Add Item</button>
-        <hr>
-        <div ng-if="listEditMode[$index]">
-          <form method="post" name="blist_edit_form">
-            <div class="form-group">
-              <input type="text" class="form-control" required name="bucketlistname" ng-model="bl.name">
+      <div ng-repeat="bl in bucketlists">
+          <div class="bucketlist">
+            <div class="blist_date">{{bl.date_created | datefilter}}</div>
+            <button ng-if="!listEditMode[$index]" class="btn btn-success btn-raised btn-xs pull-right" ng-click="editBucketlist(bl.id, $index)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button>
+            <button ng-if="listEditMode[$index]" class="btn btn-warning btn-raised btn-xs pull-right" ng-click="cancelBucketlist($index)">Cancel</button>
+            <button class="btn btn-danger btn-raised btn-xs pull-right" ng-click="deleteBucketlist(bl.id, bl.name)"><i class="fa fa-trash" aria-hidden="true"></i> Delete</button>
+            <button ng-if="!listEditMode[$index] && !itemEditMode[$index] && !itemAddMode[$index]" class="btn btn-info btn-raised btn-xs pull-right" id="addItemto{{$index}}" ng-click="createBucketlistItem(bl.id, $index)"><i class="fa fa-plus-circle" aria-hidden="true"></i>  Add Item</button>
+            <hr>
+            <div ng-if="listEditMode[$index]">
+              <form method="post" name="blist_edit_form">
+                <div class="form-group">
+                  <input type="text" class="form-control" required name="bucketlistname" ng-model="bl.name">
+                </div>
+                <div class="help-block" style="color:red;" ng-messages="blist_edit_form.bucketlistname.$error" ng-show="blist_edit_form.bucketlistname.$touched">
+                  <div ng-message="required">Please provide the bucketlist name</div>
+                </div>
+                <button class="btn btn-success btn-raised btn-xs" ng-disabled="blist_edit_form.$invalid" ng-click="editBucketListSubmit(bl.id, bl.name, $index)">Submit</button>
+              </form>
             </div>
-            <div class="help-block" style="color:red;" ng-messages="blist_edit_form.bucketlistname.$error" ng-show="blist_edit_form.bucketlistname.$touched">
-              <div ng-message="required">Please provide the bucketlist name</div>
-            </div>
-            <button class="btn btn-success btn-raised btn-xs" ng-disabled="blist_edit_form.$invalid" ng-click="editBucketListSubmit(bl.id, bl.name, $index)">Submit</button>
-          </form>
-        </div>
-        <div ng-if="!listEditMode[$index]">
-          <div style="cursor: copy;" id="blist{{$index}}" ng-click="getListItems(bl.id ,bl.name, $index)">{{bl.name}}</div>
-        </div>
-        <div ng-if="itemAddMode[$index] && !listEditMode[$index]">
-          <hr>
-          <form name="new_item_form" method="post">
-            <div class="form-group">
-              <input type="text" class="form-control" id="blistitem{{$index}}" placeholder="Enter Item Name" required ng-model="listitem" name="listitem">
+            <div ng-if="!listEditMode[$index]">
+              <div style="cursor: copy;" id="blist{{$index}}" ng-click="getListItems(bl.id ,bl.name, $index)"><i class="fa fa-2x fa-bitbucket" aria-hidden="true"></i> <span class="btn btn-block bl-btn">{{bl.name}}</span></div>
             </div>
             <div ng-messages="new_item_form.listitem.$error" ng-show="new_item_form.listitem.$touched">
               <div class="help-block" style="color:red" ng-message="required">
@@ -62,14 +57,15 @@
       </div>
     </div>
   </div>
-  <div class="col-lg-6 col-md-6 col-xs-12 col-sm-6">
+  <div class="col-lg-6 col-md-6 col-xs-12 col-sm-6" style="background-color: #044F67; color: white;">
     <div class="btn btn-block btn-primary">{{current_selection}}</div>
     <div class="bucketlist_items">
       <ul ng-repeat="item in current_items">
         <li ng-if="!itemEditMode[$index]" class="blist_items">{{$index+1}} ) <i style="color: #9D2933;" class="fa fa-remove" ng-show="!item.done"></i><i style="color: #26A65B;" class="fa fa-check" ng-show="item.done"></i>{{item.item_name}}
-          <button class="btn btn-success btn-raised btn-xs pull-right" ng-click="editItem(item.id, $index)">Edit</button>
-          <button class="btn btn-danger btn-raised btn-xs pull-right" ng-click="deleteItem(item.id, $index, current_bucket_list, current_blist_index)">Delete</button>
+          <button class="btn btn-success btn-raised btn-xs pull-right" ng-click="editItem(item.id, $index)"> <i class="fa fa-pencil-square-o" aria-hidden="true"></i>Edit</button>
+          <button class="btn btn-danger btn-raised btn-xs pull-right" ng-click="deleteItem(item.id, $index, current_bucket_list, current_blist_index)"><i class="fa fa-trash" aria-hidden="true"></i> Delete</button>
         </li>
+        <hr>
         <br>
         <li class="blist_items" ng-if="itemEditMode[$index]">
           <form method="post" name="edit_item_form">

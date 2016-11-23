@@ -51,8 +51,7 @@ app.filter('datefilter', function() {
     var output = ''
     var date = input_date.slice(0, 10);
     var time = input_date.slice(11, 16)
-    output = date + " " + time
-    return output
+    return date
   }
 })
 
@@ -66,7 +65,7 @@ app.controller('DashboardCtrl', ['$scope', '$window', '$localStorage', 'LoginSer
     if (auth_token == null || auth_token == undefined || typeof auth_token == undefined) {
       $state.go('index.login')
     }
-
+    $scope.hovering = false
     $scope.listEditMode = []
     $scope.itemEditMode = []
     $scope.itemAddMode = []
