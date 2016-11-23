@@ -30,6 +30,7 @@
     "angular-ui-router": "^0.3.2",
     "angular-messages": "^1.5.8",
     "angular-resource": "^1.5.8",
+    "fontawesome": "~4.1.0",
     "restangular": "^1.5.2",
     "ngstorage": "^0.3.11",
     "font-awesome": "^4.7.0",

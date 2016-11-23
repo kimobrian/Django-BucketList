@@ -1,5 +1,3 @@
-from api.models import BucketListItem, BucketList
-from django.contrib.auth.models import User
 from rest_framework.test import APITestCase
 from rest_framework import status
 
@@ -24,33 +22,6 @@ class BucketListItemsTests(APITestCase):
         self.client.force_authenticate(token=self.token)
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token)
 
-        # Test user
-        user = User()
-        user.username = 'testuser2'
-        user.email = 'test2@email.com'
-        user.password = 'pass1234'
-        user.save()
-
-        # Test bucketlist
-        bucketlist = BucketList()
-        bucketlist.name = 'First Bucketlist'
-        bucketlist.created_by = user
-        bucketlist.save()
-
-        # Test Bucketlist item
-        bucketlist_item = BucketListItem()
-        bucketlist_item.item_name = 'Bucketlist Item'
-        bucketlist_item.bucketlist = bucketlist
-        bucketlist_item.save()
-
-    def test_adding_items_to_someones_bucketlist(self):
-        """Test trying to add a bucketlist to someone else's bucketlist"""
-        response = self.client.post(
-            '/bucketlists/1/items/', data={"item_name": "Bucketlist Item"},
-            format='json')
-        self.assertEqual(response.data, {"detail": "Not found."})
-        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
-
     def test_adding_items_to_bucketlist_that_does_not_exist(self):
         """Test addition of items to bucketlist that does not exist"""
         response = self.client.post(
@@ -67,12 +38,62 @@ class BucketListItemsTests(APITestCase):
         self.assertEqual(response.data, {"detail": "Not found."})
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
-    def test_deleting_of_bucket_list_tem_that_does_not_exist(self):
+    def test_deleting_of_bucket_list_item_that_does_not_exist(self):
         """Test for the deletion of a bucketlist item that does not exist"""
         response = self.client.get('/bucketlists/34/items/74/')
         self.assertEqual(response.data, {"detail": "Not found."})
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
-    def test_succesful_deletion_of_bucketlist_item(self):
-        """Test that a bucketlist item is deleted successfully"""
-        pass
+    def test_successful_creation_of_bucketlist_item(self):
+        """Test that a bucketlist item is created successfully"""
+        response = self.client.post('/bucketlists/',
+                                    data={"name": "Bucketlist name"})
+        bucketlist_id = response.data.get('id')
+        response = self.client.post(
+            '/bucketlists/' + str(bucketlist_id) + '/items/',
+            data={"item_name": "Item in bucketlist"})
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_creation_of_duplicate_bucketlist_item(self):
+        """Test for creation of duplicate bucketlist items"""
+        response = self.client.post('/bucketlists/',
+                                    data={"name": "Bucketlist name"})
+        bucketlist_id = response.data.get('id')
+        self.client.post(
+            '/bucketlists/' + str(bucketlist_id) + '/items/',
+            data={"item_name": "Item in bucketlist"})
+        response = self.client.post(
+            '/bucketlists/' + str(bucketlist_id) + '/items/',
+            data={"item_name": "Item in bucketlist"})
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data,
+                         {"item_name": ["Item name already exists"]})
+
+    def test_successful_deletion_of_bucketlist_item(self):
+        """Test that a bucketlist item is deleted succesfully"""
+        response = self.client.post('/bucketlists/',
+                                    data={"name": "Bucketlist name"})
+        bucketlist_id = response.data.get('id')
+        bucketlist_item = self.client.post(
+            '/bucketlists/' + str(bucketlist_id) + '/items/',
+            data={"item_name": "Item in bucketlist"})
+        item_id = bucketlist_item.data.get('id')
+        response = self.client.delete(
+            '/bucketlists/' + str(
+                bucketlist_id) + '/items/' + str(item_id) + '/')
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+
+    def test_successful_update_of_bucketlist_item(self):
+        """Test that an item is updated successfully"""
+        response = self.client.post('/bucketlists/',
+                                    data={"name": "Bucketlist name"})
+        bucketlist_id = response.data.get('id')
+        bucketlist_item = self.client.post(
+            '/bucketlists/' + str(bucketlist_id) + '/items/',
+            data={"item_name": "Item in bucketlist"})
+        item_id = bucketlist_item.data.get('id')
+        response = self.client.put(
+            '/bucketlists/' + str(bucketlist_id) + '/items/' + str(
+                item_id) + '/', data={"item_name": "Updated item name"})
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIn("Updated item name", str(response.data))
