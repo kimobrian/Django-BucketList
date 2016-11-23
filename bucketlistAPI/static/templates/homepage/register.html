@@ -41,11 +41,6 @@
           <div ng-message="required" class="help-block">Password Confirmation is Required</div>
           <div ng-message="pattern" class="help-block">Confirmation password does not match password</div>
         </div>
-        <!-- <div ng-if="regform.password.$dirty && regform.conf_password.$dirty">
-          <div style="color:red" class="help-block" ng-if="regform.password != regform.conf_password">
-            Confirmation password does not match password
-          </div>
-        </div> -->
-        <input type='submit' ng-disabled="regform.$invalid" class='btn btn-raised btn-primary' value='REGISTER'>
+        <input type='submit' id="registerButton" ng-disabled="regform.$invalid" class='btn btn-raised btn-primary' value='REGISTER'>
     </form>
 </div>

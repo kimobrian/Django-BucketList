@@ -56,13 +56,6 @@ app.filter('datefilter', function() {
   }
 })
 
-app.filter('offset', function() {
-  return function(input, start) {
-    start = parseInt(start, 10);
-    return input.slice(start);
-  };
-});
-
 
 app.controller('DashboardCtrl', ['$scope', '$window', '$localStorage', 'LoginService', '$state', 'BucketLists', 'BucketlistItemService',
 
@@ -145,6 +138,7 @@ app.controller('DashboardCtrl', ['$scope', '$window', '$localStorage', 'LoginSer
       if (confirm) {
         BucketLists.deleteBucketList(blist_id, auth_token, function(response) {
           BucketLists.getBucketLists(auth_token).then(function(res) {
+            
             $scope.bucketlists = res[0]
             $scope.current_items = res[0][0].bucketlist_items
             $scope.current_selection = res[0][0].name + " ITEMS"
