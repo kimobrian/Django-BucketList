@@ -32,7 +32,7 @@ describe('Bucketlist Application Front End Tests', function() {
         element(by.model('list_name')).sendKeys(random_bucketlist)
         element(by.id("create_list")).click().then(function(){
           browser.waitForAngular().then(function(){
-              expect(element(by.tagName('body')).getText()).toContain(random_bucketlist);
+              expect(element(by.tagName('body')).getText()).toContain(random_bucketlist.toUpperCase());
           })
       })    
     })
